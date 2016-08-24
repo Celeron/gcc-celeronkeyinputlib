@@ -12,7 +12,7 @@ Features
 
 * Any Button connect schematics (simple buttons or keyboards etc) supported by custom user code. Default code implementation provided for a simple button connection (one Button on particular Port).
 
-* Three Encoder connect methods have provided: 1) "periodical sampling in SysTick interrupt", 2) via port's "change of level" interrupt, 3) by the advanced instrumentality of hardware Timer (on some microcontrollers like STM32)...
+* Three Encoder connect methods have provided: 1) "periodical sampling" in SysTick interrupt; 2) via port's "change of level" interrupt; 3) by the advanced instrumentality of hardware Timer (on some microcontrollers like STM32)...
 
 * The "suppression of the ringing contacts" feature have implemented (adjustable and disconnectable) for any button or encoder channels. You could freely omit the RC-chain for Buttons... (Hint: for Encoders, rather to use hardware RC-chaines, it is not recomended to use software "ringing suppression"... But you still could!)
 
