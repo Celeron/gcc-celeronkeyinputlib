@@ -33,7 +33,8 @@ Description
 -----------
 
 Not yet written... 
-See [description on former library port in assembler...] (<http://we.easyelectronics.ru/AVR/avrasm-biblioteka-procedur-dlya-intellektualnoy-obrabotki-vvoda-v-mk-sobytiy-ot-knopok-i-enkoderov-chast-1-avtorskaya-metodika-i-realizaciya.html >)
+
+See instead [description on former library port in assembler...] (<http://we.easyelectronics.ru/AVR/avrasm-biblioteka-procedur-dlya-intellektualnoy-obrabotki-vvoda-v-mk-sobytiy-ot-knopok-i-enkoderov-chast-1-avtorskaya-metodika-i-realizaciya.html >)
 
 
 
@@ -55,10 +56,8 @@ Brief usage example
       while(1) 
       {
 
-
         // Event Handlers 
         // Note: you should write mutually exclusive handler conditions!
-
 
 
         if(BUTTON_HAVE_STATUS( BUTTON1, BSC_ShortHold ))
@@ -76,7 +75,6 @@ Brief usage example
         if(BUTTON_HAVE_FLAG( BUTTON2, BUTTON_IS_HOLDDOWN ))
         {
           // Event: BUTTON2 have puched just now... (you could immediately issue some notification to display or etc)
-
 
           if(BUTTON_HAVE_TIME( BUTTON2, 750))
           {
@@ -118,7 +116,6 @@ Brief usage example
         }
 
       }
-
 
       return 0;
     }
