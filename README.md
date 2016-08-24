@@ -131,8 +131,7 @@ GCC compatible C compiler.
 
 Tested with:
 
-- Keil ARMCC compiler (firmware for 32bit "STM32 Cortex-M" microcontrollers, "CMSIS standalone" or "STM32Cube Framework" compatible)
-
+- Keil ARMCC compiler (firmware for 32bit "STM32 Cortex-M" microcontrollers: code-independent from low level drivers, like "CMSIS" and "STM32Cube")
 - Microchip XC8 compiler (firmware for 8bit "PIC16F", "PIC18F" series microcontrollers)
 
 
