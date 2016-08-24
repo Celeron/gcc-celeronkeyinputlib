@@ -104,7 +104,7 @@ Brief usage example
 
 
 
-        // "Smart Buttons" handlers
+        // "Smart Button" handlers
 
         if(keyIfSmartButtonPressed( BUTTON_UP, 4 ))
         {
