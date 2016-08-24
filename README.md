@@ -14,7 +14,7 @@ Features
 
 * Three Encoder connect methods have provided: 1) "periodical sampling in SysTick interrupt", 2) via port's "change of level" interrupt, 3) by the advanced instrumentality of hardware Timer (on some microcontrollers like STM32)...
 
-* The "suppression of the ringing contacts" feature have implemented (adjustable and disconnectable) for any button or encoder channels. You could freely omit the RC-chain for Buttons... (Hint: for Encoders, rather to use hardware RC-chaines, it is not recomended to use software "ringing suppression"... But you stil could!)
+* The "suppression of the ringing contacts" feature have implemented (adjustable and disconnectable) for any button or encoder channels. You could freely omit the RC-chain for Buttons... (Hint: for Encoders, rather to use hardware RC-chaines, it is not recomended to use software "ringing suppression"... But you still could!)
 
 * A lot of methods provided for button State recognition: "short button press", "long button press", "several buttons pressed, but another several not pressed, with different time of holding"... Allow flexible user interface programming.
 
@@ -41,7 +41,7 @@ See [description on former library port in assembler...] (<http://we.easyelectro
 Brief usage example
 -------------------
 
-<main.c>::
+::
 
     #include "celeronkeyinputlib.h"
 
