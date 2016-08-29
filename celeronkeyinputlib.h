@@ -401,8 +401,12 @@ void keyScanInput_EXTIHandler(void);
 
 // Вспомогательные методы обработки статусов кнопок:
 void keyResetStatusForAllButtons(void);
-uint8_t keyIfAnyButtonPressed(void);
+uint8_t keyIfAnyButtonUnhandled(void);
+uint8_t keyIfAnyButtonHolddown(void);
 uint8_t keyIfSmartButtonPressed(uint8_t ID, uint8_t WaitingScheme);
+
+// Для обратной совместимости (obsolete)
+#define keyIfAnyButtonPressed keyIfAnyButtonUnhandled
 
 
 
