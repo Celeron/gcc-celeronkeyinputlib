@@ -34,7 +34,7 @@ Description
 
 Not yet written... 
 
-See instead [description on former library port in assembler...] (<http://we.easyelectronics.ru/AVR/avrasm-biblioteka-procedur-dlya-intellektualnoy-obrabotki-vvoda-v-mk-sobytiy-ot-knopok-i-enkoderov-chast-1-avtorskaya-metodika-i-realizaciya.html >)
+See instead [description on former library port in assembler...] (<http://inventproject.info/blog/avrasm-biblioteka-protsedur-dlya-intellektualnoj-obrabotki-sobytij-ot-knopok-i-enkoderov-avtorskaya-metodika-i-realizatsiya/>)
 
 
 
