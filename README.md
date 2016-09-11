@@ -18,9 +18,9 @@ Features
 
 * A lot of methods provided for button State recognition: "short button press", "long button press", "several buttons pressed, but another several not pressed, with different time of holding"... Allow flexible user interface programming.
 
-* Integrated implementation of ["Smart Buttons"] (<http://we.easyelectronics.ru/AVR/avrasm-biblioteka-procedur-dlya-intellektualnoy-obrabotki-vvoda-v-mk-sobytiy-ot-knopok-i-enkoderov-chast-2-poryadok-vnedreniya-i-ispolzovaniya.html#handlermagicbutton>) - most useful for easy "values adjustment" via user interface...
+* Integrated implementation of ["Smart Buttons"] (<http://inventproject.info/blog/celeronkeyinputlib-avrasm-library/#handlermagicbutton>) - most useful for easy "values adjustment" via user interface...
 
-* Standardized API for applied code (for ["event handlers"] (<http://we.easyelectronics.ru/AVR/avrasm-biblioteka-procedur-dlya-intellektualnoy-obrabotki-vvoda-v-mk-sobytiy-ot-knopok-i-enkoderov-chast-2-poryadok-vnedreniya-i-ispolzovaniya.html#handler>)).
+* Standardized API for applied code (for ["event handlers"] (<http://inventproject.info/blog/celeronkeyinputlib-avrasm-library/#handler>)).
 
 * Feature parameters are customizable via macro definitions (simple tuning). Rare used Features could be excluded via macro definitions (to reduce library code size).
 
@@ -34,7 +34,7 @@ Description
 
 Not yet written... 
 
-See instead [description on former library port in assembler...] (<http://inventproject.info/blog/avrasm-biblioteka-protsedur-dlya-intellektualnoj-obrabotki-sobytij-ot-knopok-i-enkoderov-avtorskaya-metodika-i-realizatsiya/>)
+See instead [description on former library port in assembler...] (<http://inventproject.info/blog/celeronkeyinputlib-avrasm-library/>)
 
 
 
