@@ -31,6 +31,12 @@
 //---------------------------------------------------------------------------
 
 
+#ifdef STM32F103xE
+    // Подключить HAL API
+    #include "stm32f1xx_hal.h"
+#endif
+
+
 #ifdef __XC8
     // Подключить определения Микроконтроллера
     #include <xc.h>
@@ -38,6 +44,11 @@
     // Подключить стандартные библиотеки
     #include <stdint.h>
     #include <stdbool.h>
+
+    // Костыли для совместимости синтаксиса с примитивным компилятором "Microchip XC8" (деградируем некоторые фичи)
+    #define __weak
+    #define __inline  inline
+    #define assert_param(param)
 #endif
 
 
@@ -62,15 +73,6 @@ void keyUpdateButtonStatus(const TInputIntegrator* const Integrator,
                                  TButtonStatus*    const Status);
 
 void keyIncreaseTimeForAllButtons(void);
-
-
-
-// Костыли для совместимости синтаксиса с примитивным компилятором "Microchip XC8"
-#ifdef __XC8
-    #define __weak
-    #define __inline  inline
-    #define assert_param(param)
-#endif
 
 
 
