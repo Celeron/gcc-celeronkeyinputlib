@@ -114,8 +114,12 @@ TButtonData  keyButtonList[] = {
 //  ¬нимание: элементы следует перечисл€ть в пор€дке номеров индексов, заданных соответствующими #define-константами.
 #ifndef NO_ENCODERS_AT_ALL
 TEncoderData  keyEncoderList[] = {
+#ifdef STM32F103xE
     DECLARE_ENCODER(GPIOA, GPIO_PIN_0,  GPIOA, GPIO_PIN_1),  // ¬нутренний Ёнкодер: PA0(TIM5_CH1), PA1(TIM5_CH2).
     DECLARE_ENCODER(GPIOC, GPIO_PIN_6,  GPIOC, GPIO_PIN_7),  // ¬нешний    Ёнкодер: PC6(TIM8_CH1), PC7(TIM8_CH2).
+#endif
+#ifdef __XC8
+#endif
 };
 #endif
 
