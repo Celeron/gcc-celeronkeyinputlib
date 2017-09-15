@@ -1,5 +1,5 @@
 /******************************************************************************
- * Модуль:      celeronkeyinputlib.c  (MiddleWare)
+ * Модуль:      celeronkeyinputlib.c  (MiddleWare)  v1.1
  * Автор:       Celeron  http://inventproject.info/
  * Назначение:  Библиотека процедур для интеллектуальной обработки ВВОДА: сканирование Кнопок и Энкодеров.
  ******************************************************************************/
@@ -93,9 +93,19 @@ void keyIncreaseTimeForAllButtons(void);
 // Коллекция всех подключенных Кнопок
 //  Внимание: элементы следует перечислять в порядке номеров индексов, заданных соответствующими #define-константами.
 TButtonData  keyButtonList[] = {
+#ifdef STM32F103xE
+    DECLARE_BUTTON(GPIOD, GPIO_PIN_13),   // PD13 - Button: Encoder  (кнопка встроенная в вал энкодера)
+    DECLARE_BUTTON(GPIOD, GPIO_PIN_10),   // PD10 - Button: MenuPrev (верхнее меню)
+    DECLARE_BUTTON(GPIOD, GPIO_PIN_9),    // PD9  - Button: MenuOk   (верхнее меню)
+    DECLARE_BUTTON(GPIOD, GPIO_PIN_8),    // PD8  - Button: MenuNext (верхнее меню)
+    DECLARE_BUTTON(GPIOB, GPIO_PIN_15),   // PB15 - Button: Escape   (отменить/СТОП)
+    DECLARE_BUTTON(GPIOB, GPIO_PIN_13),   // PB13 - Button: Enter    (сохранить/ПУСК)
+#endif
+#ifdef __XC8
     DECLARE_BUTTON(&PORTE, 0),    // BUTTON_RIGHT  = RE0
     DECLARE_BUTTON(&PORTE, 1),    // BUTTON_CENTER = RE1
     DECLARE_BUTTON(&PORTE, 2),    // BUTTON_LEFT   = RE2
+#endif
 };
 
 
@@ -104,7 +114,8 @@ TButtonData  keyButtonList[] = {
 //  Внимание: элементы следует перечислять в порядке номеров индексов, заданных соответствующими #define-константами.
 #ifndef NO_ENCODERS_AT_ALL
 TEncoderData  keyEncoderList[] = {
-    DECLARE_ENCODER(GPIOA, GPIO_PIN_0,  GPIOA, GPIO_PIN_1)  // В системе один Энкодер. Его каналы: PA0(TIM5_CH1), PA1(TIM5_CH2).
+    DECLARE_ENCODER(GPIOA, GPIO_PIN_0,  GPIOA, GPIO_PIN_1),  // Внутренний Энкодер: PA0(TIM5_CH1), PA1(TIM5_CH2).
+    DECLARE_ENCODER(GPIOC, GPIO_PIN_6,  GPIOC, GPIO_PIN_7),  // Внешний    Энкодер: PC6(TIM8_CH1), PC7(TIM8_CH2).
 };
 #endif
 
@@ -137,7 +148,15 @@ uint8_t  keyEncoderListCount = NUMBER_OF_ARRAY_ITEMS(keyEncoderList);
 __weak __inline uint8_t keyScanChannel(const TInputChannel* const channel)
 {
   // Сканировать состояние Канала
+#ifdef STM32F103xE
+  return ( HAL_GPIO_ReadPin(channel->GPIO, channel->Pin) == GPIO_PIN_RESET );
+#endif
+#ifdef __XC8
+  // Кодировка сигнала в физическом канале кнопки (при простейшей реализации: один порт - одна кнопка; где, Кнопка подключена к Земле "0", или к Питанию "1")
+  #define BUTTON_STATE   0
   return ( ((*channel->Port >> channel->Pin)&0x01) == BUTTON_STATE );
+  #undef  BUTTON_STATE
+#endif
 }
 
 
@@ -822,7 +841,7 @@ void keyResetStatusForAllButtons(void)
 //---------------------------------------------------------------------------
 // Вспомогательная функция: 
 //
-//  возвращает true - если есть кнопки с необработанными статусами...
+//  возвращает TRUE - если есть кнопки с необработанными статусами...
 //      Т.е. если хоть какая-то Кнопка нажималась РАНЕЕ или удерживается прямо СЕЙЧАС, 
 //      но она ещё не обработана и не сброшена через BUTTON_RESET.
 //
@@ -845,17 +864,17 @@ uint8_t keyIfAnyButtonUnhandled(void)
     if( (status                              != RESET_BUTTON_STATUS)                 &&    // Исключение: при сканировании статусов, игнорируем Кнопки в состояниии "отложенный сброс"...
         ((status&(0x07<<BUTTON_STATUS_CODE)) != (BSC_NotPressed<<BUTTON_STATUS_CODE)) )    // Примечание: выражение эквивалентно макросу  !BUTTON_REGISTER_HAVE_STATUS(status, BSC_NotPressed)
     {
-      return 1;                                                                            // Нашли нажатую Кнопку - возвращаем "true"...
+      return 1;                                                                            // Нашли нажатую Кнопку - возвращаем TRUE...
     }
   } 
-  return 0;                                                                                // Ничего не нажато - возвращаем "false"...
+  return 0;                                                                                // Ничего не нажато - возвращаем FALSE...
 }
 
 
 //---------------------------------------------------------------------------
 // Вспомогательная функция: 
 //
-//  возвращает true - если ПРЯМО СЕЙЧАС НАЖАТА и удерживается хоть какая-то Кнопка,
+//  возвращает TRUE - если ПРЯМО СЕЙЧАС НАЖАТА и удерживается хоть какая-то Кнопка,
 //      но она ещё не обработана и не сброшена через BUTTON_RESET.
 //
 // Примечание: при сканировании статусов, Кнопки в состоянии "отложенный сброс" игнорируются.
@@ -871,10 +890,10 @@ uint8_t keyIfAnyButtonHolddown(void)
     if( (status != RESET_BUTTON_STATUS)    &&   // Исключение: при сканировании статусов, игнорируем Кнопки в состояниии "отложенный сброс"...
         (status & (1<<BUTTON_IS_HOLDDOWN)) )    // Примечание: выражение эквивалентно макросу  BUTTON_HAVE_FLAG(status, BUTTON_IS_HOLDDOWN)
     {
-      return 1;                                 // Нашли нажатую Кнопку - возвращаем "true"...
+      return 1;                                 // Нашли нажатую Кнопку - возвращаем TRUE...
     }
   } 
-  return 0;                                     // Ничего не нажато - возвращаем "false"...
+  return 0;                                     // Ничего не нажато - возвращаем FALSE...
 }
 
 
@@ -940,11 +959,13 @@ uint8_t keyIfSmartButtonPressed(uint8_t ID, uint8_t WaitingScheme)
           )
         )                     ||
 
-        (WaitingScheme == 4   &&                                              //Схема: чем дольше кнопка удерживается, тем чаще срабатывает данное событие...
+        (WaitingScheme == 4   &&                                              //Схема: чем дольше кнопка удерживается, тем чаще срабатывает данное событие...  (Примечание: использовалась в проекте "Dimmer".)
           ( 
             (
-              ((status-CButtonLongHoldDuration) > CButtonTimeIncFrequency*1.5)  //когда "длинное удержание" длится уже свыше 2 секунд,
+              ((status-CButtonLongHoldDuration) > CButtonTimeIncFrequency*1.5)  //когда "длинное удержание" длится уже свыше 1.5 секунд,
+#if (CButtonTimeIncFrequency >= 10)
               && (time >= CButtonTimeIncFrequency/10)                         //то срабатываем десять раз в секунду
+#endif                 
             ) || (time >= CButtonTimeIncFrequency/4)                          //иначе срабатываем каждые четверть секунды
           )
         )
