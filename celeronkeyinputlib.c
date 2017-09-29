@@ -972,6 +972,17 @@ uint8_t keyIfSmartButtonPressed(uint8_t ID, uint8_t WaitingScheme)
 #endif                 
             ) || (time >= CButtonTimeIncFrequency/4)                          //иначе срабатываем каждые четверть секунды
           )
+        )                     ||
+
+        (WaitingScheme == 5   &&                                              //Схема: чем дольше кнопка удерживается, тем чаще срабатывает данное событие...  (более тормознутая динамика, чем в 4 схеме)
+          ( 
+            (
+              ((status-CButtonLongHoldDuration) > CButtonTimeIncFrequency*2.5)  //когда "длинное удержание" длится уже свыше 2.5 секунд,
+#if (CButtonTimeIncFrequency >= 8)
+              && (time >= CButtonTimeIncFrequency/8)                          //то срабатываем 8 раз в секунду
+#endif                 
+            ) || (time >= CButtonTimeIncFrequency/4)                          //иначе срабатываем 4 раз в секунду
+          )
         )
       )
     {
